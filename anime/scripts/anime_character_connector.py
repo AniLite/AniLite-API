@@ -4,7 +4,7 @@ from anime.models import Anime, Character
 
 def main():
 
-    lst_anime = Anime.objects.all()[40: 51]
+    lst_anime = Anime.objects.all()[11: 51]
     for anime in lst_anime:
         anime_url = f'https://kitsu.io/api/edge/anime?filter[slug]={anime.slug}'
         res = requests.get(anime_url)
