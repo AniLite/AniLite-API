@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-72qctr1uh5o+91z8d*37%k%blr7_@-d%g+h3c%ukalbq2+mmus
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'anilite-api-v1.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'anilite-api-v1.herokuapp.com', 'localhost']
 CORS_ORIGIN_ALLOW_ALL = True
 
 
@@ -75,6 +75,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# Local Postgres instance
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -85,6 +87,21 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'PORT': '5432'
 #     }
 # }
+
+# ElephantSQL Postgres instance
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'wykqkqwe',
+#         'USER': 'wykqkqwe',
+#         'PASSWORD': '3Sia9V405EFOFVrYTNQmv5vDw9GI9UHW',
+#         'HOST': 'john.db.elephantsql.com',
+#         'PORT': '5432'
+#     }
+# }
+
+# SQLite instance
 
 DATABASES = {
     'default': {
@@ -141,14 +158,14 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # REST_FRAMEWORK = {
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-#     'PAGE_SIZE': 5
+
 # }
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 5
 }
-
 
 SWAGGER_SETTINGS = {
     'LOGIN_URL': 'rest_framework:login',

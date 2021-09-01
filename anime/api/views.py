@@ -11,7 +11,41 @@ from .mixins import MultipleFieldLookupMixin
 
 
 class AnimeListView(ListAPIView):
-    queryset = Anime.objects.all()
+    def get_queryset(self):
+        queryset = Anime.objects.all()
+        fields = ['startswith', 'includes', 'sort', 'genre']
+        # for field in fields:
+        for field in fields:
+
+            globals()[field] = self.request.query_params.get(f'{field}')
+
+            if globals()[field]:
+
+                if field == 'startswith':
+                    queryset = queryset.filter(
+                        name_en__istartswith=globals()[field])
+
+                elif field == 'includes':
+                    queryset = queryset.filter(
+                        name_en__icontains=globals()[field])
+
+                elif field == 'sort':
+                    if globals()[field] == 'rating':
+                        queryset = queryset.order_by(
+                            '-' + str(globals()[field]))
+                    else:
+                        queryset = queryset.order_by(str(globals()[field]))
+
+            if 'genres' in globals():
+                genres = globals()[field].split(' ')
+                for count, genre in enumerate(genres, 1):
+                    globals()['qs' + str(count)
+                              ] = Genre.objects.get(slug__iexact=genre).animes.all()
+                    queryset = queryset.intersection(
+                        globals()['qs' + str(count)])
+
+        return queryset
+
     serializer_class = AnimeListSerializer
 
 

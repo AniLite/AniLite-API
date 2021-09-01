@@ -36,7 +36,7 @@ class Anime(models.Model):
     about = models.TextField(null=True, blank=True)
     started = models.DateField(null=True, blank=True)
     ended = models.DateField(null=True, blank=True)
-    genres = models.ManyToManyField(Genre, blank=True, related_name='anime')
+    genres = models.ManyToManyField(Genre, blank=True, related_name='animes')
     characters = models.ManyToManyField(
         Character, blank=True, related_name='anime')
     num_of_eps = models.IntegerField(null=True, blank=True)
