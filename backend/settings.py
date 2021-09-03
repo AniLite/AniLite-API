@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-72qctr1uh5o+91z8d*37%k%blr7_@-d%g+h3c%ukalbq2+mmus
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'anilite-api-v1.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'anilite-api.herokuapp.com', 'localhost']
 CORS_ORIGIN_ALLOW_ALL = True
 
 
