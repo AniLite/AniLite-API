@@ -12,10 +12,14 @@ class AnimeListSerializer(serializers.ModelSerializer):
                   'about', 'started', 'is_completed', 'ended', 'rating', 'num_of_eps', 'poster_image', 'cover_image', 'studio', 'genres']
 
     def get_genres(self, obj):
-        data = []
-        for genre in obj.genres.all():
-            # data.insert(0, genre.name)
-            data += [{'id': genre.id, 'name': genre.name}]
+        data = [
+            {
+                'id': genre.id,
+                'name': genre.name,
+                'link': f'http://localhost:8000/api/genre{genre.slug}'
+            }
+            for genre in obj.genres.all()
+        ]
         return data
 
 
@@ -27,20 +31,29 @@ class AnimeDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Anime
         fields = ['id', 'type', 'name_en', 'name_jp', 'slug',
-                  'about', 'started', 'is_completed', 'ended', 'rating', 'num_of_eps', 'poster_image', 'cover_image', 'studio', 'genres', 'characters', 'episode_summary']
+                  'about', 'age_rating', 'started', 'is_completed', 'ended', 'rating', 'popularity_rank', 'num_of_eps', 'poster_image', 'cover_image', 'studio', 'directors', 'genres', 'characters', 'episode_summary']
 
     def get_genres(self, obj):
-        data = []
-        for genre in obj.genres.all():
-            # data.insert(0, genre.name)
-            data += [{'id': genre.id, 'name': genre.name}]
+        data = [
+            {
+                'id': genre.id,
+                'name': genre.name,
+                'link': f'http://localhost:8000/api/genre/{genre.slug}'
+            }
+            for genre in obj.genres.all()
+        ]
         return data
 
     def get_characters(self, obj):
-        data = []
-        for character in obj.characters.all():
-            data += [{'id': character.id,
-                      'name': character.name, 'slug': character.slug, 'image': character.image}]
+        data = [
+            {
+                'id': character.id,
+                'name': character.name,
+                'image': character.image,
+                'link': f'http://localhost:8000/api/character/{character.slug}'
+            }
+            for character in obj.characters.all()
+        ]
         return data
 
 
@@ -51,15 +64,28 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'slug']
 
 
-# class CharacterListSerializer(serializers.ModelSerializer):
+class CharacterListSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = Character
-#         fields = ['id', 'name', 'slug']
+    class Meta:
+        model = Character
+        fields = ['id', 'name', 'slug', 'image']
 
 
 class CharacterDetailSerializer(serializers.ModelSerializer):
 
+    anime = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Character
-        fields = ['id', 'name', 'slug', 'about', 'other_names', 'image']
+        fields = ['id', 'name', 'slug', 'about', 'image', 'voice_en', 'voice_jp',
+                  'other_names', 'anime']
+
+    def get_anime(self, obj):
+        data = [
+            {
+                'name': anime.name_en,
+                'link': f'http://localhost:8000/api/anime/{anime.slug}'
+            }
+            for anime in obj.anime.all()
+        ]
+        return data

@@ -1,17 +1,10 @@
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-72qctr1uh5o+91z8d*37%k%blr7_@-d%g+h3c%ukalbq2+mmus'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'anilite-api-v1.herokuapp.com', 'localhost']
@@ -75,40 +68,28 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# Local Postgres instance
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'AniLite',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Shiv@2602postgres',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
 
 # ElephantSQL Postgres instance
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'wykqkqwe',
-#         'USER': 'wykqkqwe',
-#         'PASSWORD': '3Sia9V405EFOFVrYTNQmv5vDw9GI9UHW',
-#         'HOST': 'john.db.elephantsql.com',
-#         'PORT': '5432'
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'aloezkkx',
+        'USER': 'aloezkkx',
+        'PASSWORD': 'r_FOixEh8p_TPwU-wOZFp088otCnyZAF',
+        'HOST': 'john.db.elephantsql.com',
+        'PORT': '5432'
+    }
+}
 
 # SQLite instance
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -157,14 +138,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST_FRAMEWORK = {
-
-# }
-
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 5
+    'PAGE_SIZE': 10
 }
 
 SWAGGER_SETTINGS = {

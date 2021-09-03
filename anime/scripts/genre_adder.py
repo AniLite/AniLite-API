@@ -5,7 +5,7 @@ from anime.models import Genre
 def add():
     base_url = 'https://kitsu.io/api/edge/'
     i = 0
-    while i < 60:
+    while i < 65:
         i += 1
         genre_url = f'genres/{i}'
         response = requests.get(f'{base_url}{genre_url}')

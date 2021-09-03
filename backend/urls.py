@@ -8,7 +8,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 schema_view = get_schema_view('AniLite API')
-# schema_view = get_swagger_view(title='Anilite API')
 API_TITLE = 'AniLite API'
 API_DESCRIPTION = 'An API that steals data from another API and provides it to the frontend xD'
 
@@ -16,7 +15,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('anime.api.urls'), name='api-urls'),
     path('docs/', include_docs_urls(title=API_TITLE, description=API_DESCRIPTION)),
-    # path('swagger-docs/', schema_view),
     path('schema/', schema_view)
 ]
 

@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
-from .serializers import AnimeDetailSerializer, AnimeListSerializer, CharacterDetailSerializer,  GenreSerializer
+from .serializers import AnimeDetailSerializer, AnimeListSerializer, CharacterDetailSerializer, CharacterListSerializer,  GenreSerializer
 from anime.models import Anime, Genre, Character
 from .mixins import MultipleFieldLookupMixin
 
@@ -11,23 +11,36 @@ from .mixins import MultipleFieldLookupMixin
 
 
 class AnimeListView(ListAPIView):
+
     def get_queryset(self):
+
         queryset = Anime.objects.all()
         fields = ['startswith', 'includes', 'sort', 'genre']
-        # for field in fields:
+
         for field in fields:
 
             globals()[field] = self.request.query_params.get(f'{field}')
 
             if globals()[field]:
 
-                if field == 'startswith':
+                if field == 'genre':
+                    genres = globals()[field].split(' ')
+                    for count, genre in enumerate(genres, 1):
+                        globals()['qs' + str(count)
+                                  ] = Genre.objects.get(slug__iexact=genre).animes.all()
+                        queryset = queryset.intersection(
+                            globals()['qs' + str(count)])
+
+                elif field == 'startswith':
                     queryset = queryset.filter(
                         name_en__istartswith=globals()[field])
 
                 elif field == 'includes':
                     queryset = queryset.filter(
                         name_en__icontains=globals()[field])
+                    queryset = queryset.filter(
+                        name_jp__icontains=globals()[field])
+                    print(len(queryset))
 
                 elif field == 'sort':
                     if globals()[field] == 'rating':
@@ -35,14 +48,6 @@ class AnimeListView(ListAPIView):
                             '-' + str(globals()[field]))
                     else:
                         queryset = queryset.order_by(str(globals()[field]))
-
-            if 'genres' in globals():
-                genres = globals()[field].split(' ')
-                for count, genre in enumerate(genres, 1):
-                    globals()['qs' + str(count)
-                              ] = Genre.objects.get(slug__iexact=genre).animes.all()
-                    queryset = queryset.intersection(
-                        globals()['qs' + str(count)])
 
         return queryset
 
@@ -107,8 +112,32 @@ class GenreDeleteView(MultipleFieldLookupMixin, DestroyAPIView):
 
 
 class CharacterListView(ListAPIView):
-    queryset = Character.objects.all()
-    serializer_class = CharacterDetailSerializer
+
+    def get_queryset(self):
+
+        queryset = Character.objects.all()
+        fields = ['startswith', 'includes', 'sort']
+
+        for field in fields:
+
+            globals()[field] = self.request.query_params.get(f'{field}')
+
+            if globals()[field]:
+
+                if field == 'startswith':
+                    queryset = queryset.filter(
+                        name__istartswith=globals()[field])
+
+                elif field == 'includes':
+                    queryset = queryset.filter(
+                        name__icontains=globals()[field])
+
+                elif field == 'sort':
+                    queryset = queryset.order_by(str(globals()[field]))
+
+        return queryset
+
+    serializer_class = CharacterListSerializer
 
 
 class CharacterDetailView(MultipleFieldLookupMixin, RetrieveAPIView):
