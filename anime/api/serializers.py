@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from anime.models import Anime, Genre, Character
 
-site_url = 'https://anilite-api.herokuapp.com'
+site_url = 'https://anilite-api.herokuapp.com/api'
 
 
 class AnimeListSerializer(serializers.ModelSerializer):
