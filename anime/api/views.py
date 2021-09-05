@@ -15,7 +15,7 @@ class AnimeListView(ListAPIView):
     def get_queryset(self):
 
         queryset = Anime.objects.all()
-        fields = ['startswith', 'includes', 'sort', 'genre']
+        fields = ['startswith', 'includes', 'sort', 'genre', 'type']
 
         for field in fields:
 
@@ -48,6 +48,10 @@ class AnimeListView(ListAPIView):
                             '-' + str(globals()[field]))
                     else:
                         queryset = queryset.order_by(str(globals()[field]))
+                        
+                elif field == 'type':
+                    if globals()[field] == 'movie':
+                        queryset = queryset.filter(type_icontains='MOVIE')
 
         return queryset
 
