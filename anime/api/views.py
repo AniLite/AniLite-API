@@ -44,7 +44,7 @@ class AnimeListView(ListAPIView):
                         
                 elif field == 'type':
                     if globals()[field] == 'movie':
-                        queryset = queryset.filter(type_icontains='MOVIE')
+                        queryset = queryset.filter(type__icontains='MOVIE')
 
                 elif field == 'sort':
                     if globals()[field] == 'rating':
