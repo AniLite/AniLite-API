@@ -41,6 +41,10 @@ class AnimeListView(ListAPIView):
                     queryset = queryset.filter(
                         name_jp__icontains=globals()[field])
                     print(len(queryset))
+                        
+                elif field == 'type':
+                    if globals()[field] == 'movie':
+                        queryset = queryset.filter(type_icontains='MOVIE')
 
                 elif field == 'sort':
                     if globals()[field] == 'rating':
@@ -48,10 +52,6 @@ class AnimeListView(ListAPIView):
                             '-' + str(globals()[field]))
                     else:
                         queryset = queryset.order_by(str(globals()[field]))
-                        
-                elif field == 'type':
-                    if globals()[field] == 'movie':
-                        queryset = queryset.filter(type_icontains='MOVIE')
 
         return queryset
 
