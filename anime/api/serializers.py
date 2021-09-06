@@ -51,6 +51,7 @@ class AnimeDetailSerializer(serializers.ModelSerializer):
             {
                 'id': character.id,
                 'name': character.name,
+                'slug': character.slug,
                 'image': character.image,
                 'link': f'{site_url}/character/{character.slug}'
             }
