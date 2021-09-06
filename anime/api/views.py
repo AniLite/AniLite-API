@@ -38,9 +38,9 @@ class AnimeListView(ListAPIView):
                 elif field == 'includes':
                     queryset = queryset.filter(
                         name_en__icontains=globals()[field])
-                    queryset = queryset.filter(
-                        name_jp__icontains=globals()[field])
-                    print(len(queryset))
+#                     queryset = queryset.filter(
+#                         name_jp__icontains=globals()[field])
+#                     print(len(queryset))
                         
                 elif field == 'type':
                     if globals()[field] == 'movie':
