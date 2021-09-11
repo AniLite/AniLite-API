@@ -18,6 +18,7 @@ class AnimeListSerializer(serializers.ModelSerializer):
             {
                 'id': genre.id,
                 'name': genre.name,
+                'slug': genre.slug,
                 'link': f'{site_url}/genre/{genre.slug}'
             }
             for genre in obj.genres.all()
@@ -40,6 +41,7 @@ class AnimeDetailSerializer(serializers.ModelSerializer):
             {
                 'id': genre.id,
                 'name': genre.name,
+                'slug': genre.slug,
                 'link': f'{site_url}/genre/{genre.slug}'
             }
             for genre in obj.genres.all()
@@ -87,7 +89,7 @@ class CharacterDetailSerializer(serializers.ModelSerializer):
         data = [
             {
                 'name': anime.name_en,
-                'link': f'{site_url}/anime/{anime.slug}'
+                'slug': anime.slug
             }
             for anime in obj.anime.all()
         ]
